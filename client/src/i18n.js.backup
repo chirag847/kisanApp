@@ -1,0 +1,798 @@
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+
+// Translation resources
+const resources = {
+  en: {
+    translation: {
+      // App
+      app: {
+        name: 'Kisaan',
+        description: 'Digital marketplace connecting farmers with buyers for fresh grains'
+      },
+
+      // Navigation
+      nav: {
+        home: 'Home',
+        grains: 'Grains',
+        dashboard: 'Dashboard',
+        login: 'Login',
+        register: 'Register',
+        logout: 'Logout',
+        profile: 'Profile',
+        orders: 'Orders',
+        listings: 'My Listings',
+        admin: 'Admin Panel',
+        settings: 'Settings',
+        myListings: 'My Listings',
+        addGrain: 'Add Grain',
+        myOrders: 'My Orders',
+        adminDashboard: 'Admin Dashboard',
+        manageUsers: 'Manage Users',
+        manageGrains: 'Manage Grains',
+        analytics: 'Analytics'
+      },
+      
+      // Common
+      common: {
+        search: 'Search',
+        filter: 'Filter',
+        sort: 'Sort',
+        loading: 'Loading...',
+        submit: 'Submit',
+        cancel: 'Cancel',
+        save: 'Save',
+        delete: 'Delete',
+        edit: 'Edit',
+        view: 'View',
+        back: 'Back',
+        next: 'Next',
+        previous: 'Previous',
+        yes: 'Yes',
+        no: 'No',
+        confirm: 'Confirm',
+        price: 'Price',
+        quantity: 'Quantity',
+        location: 'Location',
+        contact: 'Contact',
+        email: 'Email',
+        phone: 'Phone',
+        address: 'Address',
+        name: 'Name',
+        description: 'Description',
+        status: 'Status',
+        date: 'Date',
+        time: 'Time',
+        actions: 'Actions',
+        comingSoon: 'Coming Soon',
+        viewAll: 'View All',
+        quintals: 'quintals',
+        quintal: 'quintal'
+      },
+      
+      // Authentication
+      auth: {
+        login: 'Login',
+        register: 'Register',
+        logout: 'Logout',
+        forgotPassword: 'Forgot Password?',
+        resetPassword: 'Reset Password',
+        changePassword: 'Change Password',
+        currentPassword: 'Current Password',
+        newPassword: 'New Password',
+        confirmPassword: 'Confirm Password',
+        email: 'Email Address',
+        rememberMe: 'Remember me',
+        alreadyHaveAccount: 'Already have an account?',
+        dontHaveAccount: "Don't have an account?",
+        signInHere: 'Sign in here',
+        signUpHere: 'Sign up here',
+        welcomeBack: 'Welcome back!',
+        createAccount: 'Create your account',
+        farmer: 'Farmer',
+        buyer: 'Buyer',
+        selectRole: 'Select your role',
+        fields: {
+          name: 'Full Name',
+          email: 'Email Address',
+          password: 'Password',
+          confirmPassword: 'Confirm Password',
+          role: 'Role',
+          phone: 'Phone Number',
+          address: 'Address',
+          street: 'Street Address',
+          city: 'City',
+          state: 'State',
+          pincode: 'PIN Code'
+        },
+        placeholders: {
+          name: 'Enter your full name',
+          email: 'Enter your email address',
+          password: 'Enter your password',
+          confirmPassword: 'Confirm your password',
+          phone: 'Enter your phone number',
+          street: 'Enter street address',
+          city: 'Enter city',
+          state: 'Enter state',
+          pincode: 'Enter PIN code'
+        },
+        login: {
+          title: 'Sign in to your account',
+          subtitle: 'Welcome back! Please enter your details.',
+          forgotPassword: 'Forgot your password?',
+          noAccount: "Don't have an account?",
+          signUp: 'Sign up here',
+          submit: 'Sign In'
+        },
+        register: {
+          title: 'Create your account',
+          subtitle: 'Join Kisaan to start trading grains',
+          step1: 'Basic Information',
+          step2: 'Contact & Address',
+          next: 'Next Step',
+          back: 'Previous Step',
+          haveAccount: 'Already have an account?',
+          signIn: 'Sign in here'
+        },
+        errors: {
+          nameRequired: 'Name is required',
+          nameMinLength: 'Name must be at least 2 characters',
+          emailRequired: 'Email is required',
+          emailInvalid: 'Please enter a valid email address',
+          passwordRequired: 'Password is required',
+          passwordMinLength: 'Password must be at least 6 characters',
+          confirmPasswordRequired: 'Please confirm your password',
+          passwordsNoMatch: 'Passwords do not match',
+          roleRequired: 'Please select a role',
+          phoneRequired: 'Phone number is required',
+          phoneInvalid: 'Please enter a valid 10-digit phone number',
+          streetRequired: 'Street address is required',
+          cityRequired: 'City is required',
+          stateRequired: 'State is required',
+          pincodeRequired: 'PIN code is required',
+          pincodeInvalid: 'Please enter a valid 6-digit PIN code',
+          addressRequired: 'Address is required',
+          registrationFailed: 'Registration failed. Please try again.'
+        },
+        password: {
+          veryWeak: 'Very Weak',
+          weak: 'Weak',
+          fair: 'Fair',
+          good: 'Good',
+          strong: 'Strong'
+        }
+      },
+      
+      // Home page
+      home: {
+        hero: {
+          title: 'Digital Marketplace for Fresh Grains',
+          subtitle: 'Connect farmers directly with buyers for the freshest quality grains',
+          cta: 'Start Trading',
+          learnMore: 'Learn More',
+          getStarted: 'Get Started',
+          browseGrains: 'Browse Grains',
+          goToDashboard: 'Go to Dashboard'
+        },
+        benefits: {
+          title: 'Why Choose Kisaan?',
+          subtitle: 'Our platform provides the best solutions for farmers and buyers',
+          directConnection: 'Direct connection between farmers and buyers',
+          transparentPricing: 'Transparent and fair pricing',
+          qualityGuarantee: 'Quality assurance for all products',
+          securePayments: 'Secure payment processing',
+          logisticsSupport: 'Logistics and delivery support',
+          multilingual: 'Multilingual platform support',
+          joinCommunity: 'Join Our Community',
+          communityDescription: 'Connect with thousands of farmers and buyers across India'
+        },
+        features: {
+          title: 'Why Choose Kisaan?',
+          subtitle: 'Our platform provides the best solutions for farmers and buyers',
+          qualityAssurance: {
+            title: 'Quality Assured',
+            description: 'All grains are verified for quality and freshness'
+          },
+          fairPricing: {
+            title: 'Fair Pricing',
+            description: 'Transparent pricing with no hidden costs'
+          },
+          logistics: {
+            title: 'Logistics Support',
+            description: 'End-to-end delivery and logistics support'
+          },
+          community: {
+            title: 'Community',
+            description: 'Join thousands of farmers and buyers'
+          },
+          direct: {
+            title: 'Direct Trading',
+            description: 'No middlemen - farmers sell directly to buyers'
+          },
+          quality: {
+            title: 'Quality Assured',
+            description: 'All grains are verified for quality and freshness'
+          },
+          secure: {
+            title: 'Secure Payments',
+            description: 'Safe and secure payment processing'
+          },
+          support: {
+            title: '24/7 Support',
+            description: 'Round-the-clock customer support'
+          }
+        },
+        testimonials: {
+          title: 'What Our Users Say',
+          subtitle: 'Real stories from farmers and buyers using Kisaan',
+          farmer: 'Farmer',
+          buyer: 'Buyer',
+          farmer1: 'Kisaan has transformed my farming business. I can now sell directly to buyers and get fair prices for my grains.',
+          buyer1: 'The quality of grains I get through Kisaan is excellent. Direct connection with farmers ensures freshness.',
+          farmer2: 'The platform is easy to use and has helped me reach customers across the country. Highly recommended!'
+        },
+        cta: {
+          title: 'Ready to Start Trading?',
+          subtitle: 'Join thousands of farmers and buyers on Kisaan',
+          joinNow: 'Join Now',
+          signIn: 'Sign In',
+          goToDashboard: 'Go to Dashboard'
+        },
+        stats: {
+          farmers: 'Active Farmers',
+          buyers: 'Happy Buyers',
+          grains: 'Grain Varieties',
+          orders: 'Orders Completed',
+          quintals: 'Quintals Sold',
+          cities: 'Cities Served'
+        }
+      },
+
+      // Roles
+      roles: {
+        farmer: 'Farmer',
+        buyer: 'Buyer'
+      },
+      
+      // Grains
+      grains: {
+        title: 'Browse Grains',
+        searchPlaceholder: 'Search grains...',
+        noResults: 'No grains found',
+        loadMore: 'Load More',
+        filters: {
+          type: 'Grain Type',
+          priceRange: 'Price Range',
+          location: 'Location',
+          organic: 'Organic Only',
+          qualityGrade: 'Quality Grade'
+        },
+        types: {
+          wheat: 'Wheat',
+          rice: 'Rice',
+          corn: 'Corn',
+          barley: 'Barley',
+          millet: 'Millet',
+          sorghum: 'Sorghum',
+          oats: 'Oats',
+          quinoa: 'Quinoa',
+          other: 'Other'
+        },
+        card: {
+          perQuintal: 'per quintal',
+          available: 'Available',
+          quintals: 'quintals',
+          organic: 'Organic',
+          grade: 'Grade',
+          viewDetails: 'View Details',
+          contactFarmer: 'Contact Farmer'
+        }
+      },
+      
+      // Orders
+      orders: {
+        title: 'Orders',
+        myOrders: 'My Orders',
+        orderHistory: 'Order History',
+        orderDetails: 'Order Details',
+        placeOrder: 'Place Order',
+        orderStatus: {
+          pending: 'Pending',
+          confirmed: 'Confirmed',
+          paid: 'Paid',
+          shipped: 'Shipped',
+          delivered: 'Delivered',
+          cancelled: 'Cancelled'
+        },
+        total: 'Total Amount',
+        deliveryAddress: 'Delivery Address',
+        estimatedDelivery: 'Estimated Delivery',
+        trackOrder: 'Track Order'
+      },
+      
+      // Dashboard
+      dashboard: {
+        welcome: 'Welcome back',
+        stats: 'Statistics',
+        recentActivity: 'Recent Activity',
+        quickActions: 'Quick Actions',
+        notifications: 'Notifications',
+        invalidRole: 'Invalid user role. Please contact support.',
+        contactSupport: 'Contact Support'
+      },
+      
+      // Farmer specific
+      farmer: {
+        addListing: 'Add New Grain Listing',
+        myListings: 'My Grain Listings',
+        receivedOrders: 'Received Orders',
+        earnings: 'Earnings',
+        dashboard: {
+          welcome: 'Welcome back, {{name}}!',
+          subtitle: 'Manage your grain listings and track your orders',
+          quickActions: 'Quick Actions',
+          recentListings: 'Recent Listings',
+          recentOrders: 'Recent Orders',
+          noListings: 'No grain listings yet',
+          addFirstGrain: 'Add Your First Grain',
+          noOrders: 'No orders received yet',
+          addGrain: 'Add New Grain',
+          addGrainDesc: 'List a new grain for sale',
+          viewListings: 'View Listings',
+          viewListingsDesc: 'Manage your grain listings',
+          viewOrders: 'View Orders',
+          viewOrdersDesc: 'Check received orders',
+          totalListings: 'Total Listings',
+          activeListings: 'Active Listings',
+          totalOrders: 'Total Orders',
+          totalRevenue: 'Total Revenue'
+        },
+        grainForm: {
+          title: 'Grain Title',
+          type: 'Grain Type',
+          variety: 'Variety',
+          quantity: 'Quantity (quintals)',
+          price: 'Price per Quintal (₹)',
+          description: 'Description',
+          images: 'Upload Images',
+          qualityGrade: 'Quality Grade',
+          harvestDate: 'Harvest Date',
+          organic: 'Organic',
+          minimumOrder: 'Minimum Order Quantity'
+        }
+      },
+      
+      // Buyer specific
+      buyer: {
+        browseGrains: 'Browse Grains',
+        myOrders: 'My Orders',
+        orderHistory: 'Order History',
+        wishlist: 'Wishlist',
+        cart: 'Shopping Cart',
+        checkout: 'Checkout',
+        dashboard: {
+          title: 'Buyer Dashboard',
+          welcome: 'Welcome back, {{name}}!',
+          subtitle: 'Browse and purchase grain from farmers',
+          browseGrains: 'Browse All Grains',
+          myOrders: 'My Orders',
+          wishlist: 'Wishlist',
+          noOrders: 'No orders placed yet',
+          startShopping: 'Start Shopping'
+        }
+      },
+
+      // Order Status
+      orderStatus: {
+        pending: 'Pending',
+        confirmed: 'Confirmed',
+        paid: 'Paid',
+        shipped: 'Shipped',
+        delivered: 'Delivered',
+        cancelled: 'Cancelled'
+      },
+      
+      // Admin specific
+      admin: {
+        dashboard: {
+          title: 'Admin Dashboard',
+          welcome: 'Admin Dashboard',
+          subtitle: 'Manage users, listings, and system settings',
+          userManagement: 'User Management',
+          listingManagement: 'Listing Management',
+          systemStats: 'System Statistics',
+          reports: 'Reports'
+        },
+        users: 'Manage Users',
+        grains: 'Manage Grains',
+        orders: 'Manage Orders',
+        analytics: 'Analytics',
+        pendingApprovals: 'Pending Approvals',
+        listings: 'Listings',
+        settings: 'Settings'
+      },
+
+      // Footer
+      footer: {
+        company: 'Company',
+        forFarmers: 'For Farmers',
+        forBuyers: 'For Buyers',
+        support: 'Support',
+        aboutUs: 'About Us',
+        howItWorks: 'How It Works',
+        careers: 'Careers',
+        blog: 'Blog',
+        sellGrain: 'Sell Grain',
+        farmerGuide: 'Farmer Guide',
+        qualityStandards: 'Quality Standards',
+        pricing: 'Pricing',
+        browseGrains: 'Browse Grains',
+        buyerGuide: 'Buyer Guide',
+        bulkOrders: 'Bulk Orders',
+        logistics: 'Logistics',
+        helpCenter: 'Help Center',
+        contactUs: 'Contact Us',
+        faq: 'FAQ',
+        reportIssue: 'Report Issue',
+        privacyPolicy: 'Privacy Policy',
+        termsOfService: 'Terms of Service',
+        cookiePolicy: 'Cookie Policy',
+        refundPolicy: 'Refund Policy',
+        getInTouch: 'Get in Touch',
+        phone: 'Phone',
+        email: 'Email',
+        address: 'Address',
+        addressText: '123 Agriculture Street, New Delhi, India',
+        newsletter: 'Newsletter',
+        newsletterDescription: 'Subscribe to get updates on fresh grains and market prices',
+        emailPlaceholder: 'Enter your email',
+        subscribe: 'Subscribe',
+        copyright: '© 2024 Kisaan. All rights reserved.',
+        description: 'Digital marketplace connecting farmers with buyers for fresh grains'
+      },
+      
+      // Messages
+      messages: {
+        success: {
+          loginSuccess: 'Login successful!',
+          registerSuccess: 'Registration successful!',
+          profileUpdated: 'Profile updated successfully!',
+          grainAdded: 'Grain listing added successfully!',
+          orderPlaced: 'Order placed successfully!',
+          passwordChanged: 'Password changed successfully!'
+        },
+        error: {
+          loginFailed: 'Login failed. Please check your credentials.',
+          registerFailed: 'Registration failed. Please try again.',
+          networkError: 'Network error. Please check your connection.',
+          somethingWrong: 'Something went wrong. Please try again.',
+          unauthorized: 'You are not authorized to perform this action.',
+          notFound: 'The requested resource was not found.'
+        }
+      },
+      
+      // Error pages
+      errors: {
+        '404': {
+          title: 'Page Not Found',
+          message: 'The page you are looking for does not exist.',
+          goHome: 'Go to Home',
+          goBack: 'Go Back'
+        },
+        '403': {
+          title: 'Access Denied',
+          message: 'You do not have permission to access this page.',
+          goHome: 'Go to Home',
+          goBack: 'Go Back',
+          goDashboard: 'Go to Dashboard'
+        },
+        '500': {
+          title: 'Server Error',
+          message: 'Something went wrong on our end. Please try again later.',
+          goHome: 'Go to Home',
+          goBack: 'Go Back'
+        }
+      },
+
+      // Coming Soon
+      comingSoon: {
+        title: 'Coming Soon',
+        message: 'This feature is under development and will be available soon.',
+        stayTuned: 'Stay tuned for updates!'
+      }
+    }
+  },
+  hi: {
+    translation: {
+      // App
+      app: {
+        name: 'किसान',
+        description: 'ताजे अनाज के लिए किसानों और खरीदारों को जोड़ने वाला डिजिटल मार्केटप्लेस'
+      },
+
+      // Navigation
+      nav: {
+        home: 'होम',
+        grains: 'अनाज',
+        dashboard: 'डैशबोर्ड',
+        login: 'लॉगिन',
+        register: 'रजिस्टर',
+        logout: 'लॉगआउट',
+        profile: 'प्रोफाइल',
+        orders: 'ऑर्डर',
+        listings: 'मेरी लिस्टिंग',
+        admin: 'एडमिन पैनल'
+      },
+      
+      // Common
+      common: {
+        search: 'खोजें',
+        filter: 'फिल्टर',
+        sort: 'क्रमबद्ध करें',
+        loading: 'लोड हो रहा है...',
+        submit: 'जमा करें',
+        cancel: 'रद्द करें',
+        save: 'सेव करें',
+        delete: 'डिलीट करें',
+        edit: 'संपादित करें',
+        view: 'देखें',
+        back: 'वापस',
+        next: 'अगला',
+        previous: 'पिछला',
+        yes: 'हाँ',
+        no: 'नहीं',
+        confirm: 'पुष्टि करें',
+        price: 'कीमत',
+        quantity: 'मात्रा',
+        location: 'स्थान',
+        contact: 'संपर्क',
+        email: 'ईमेल',
+        phone: 'फोन',
+        address: 'पता',
+        name: 'नाम',
+        description: 'विवरण',
+        status: 'स्थिति',
+        date: 'तारीख',
+        time: 'समय',
+        actions: 'कार्य',
+        comingSoon: 'जल्द आ रहा है',
+        viewAll: 'सभी देखें',
+        quintals: 'क्विंटल',
+        quintal: 'क्विंटल'
+      },
+      
+      // Authentication
+      auth: {
+        login: 'लॉगिन',
+        register: 'रजिस्टर',
+        logout: 'लॉगआउट',
+        forgotPassword: 'पासवर्ड भूल गए?',
+        resetPassword: 'पासवर्ड रीसेट करें',
+        changePassword: 'पासवर्ड बदलें',
+        currentPassword: 'वर्तमान पासवर्ड',
+        newPassword: 'नया पासवर्ड',
+        confirmPassword: 'पासवर्ड की पुष्टि करें',
+        email: 'ईमेल पता',
+        rememberMe: 'मुझे याद रखें',
+        alreadyHaveAccount: 'पहले से खाता है?',
+        dontHaveAccount: 'खाता नहीं है?',
+        signInHere: 'यहाँ साइन इन करें',
+        signUpHere: 'यहाँ साइन अप करें',
+        welcomeBack: 'वापस स्वागत है!',
+        createAccount: 'अपना खाता बनाएं',
+        farmer: 'किसान',
+        buyer: 'खरीदार',
+        selectRole: 'अपनी भूमिका चुनें',
+        fields: {
+          name: 'पूरा नाम',
+          email: 'ईमेल पता',
+          password: 'पासवर्ड',
+          confirmPassword: 'पासवर्ड की पुष्टि करें',
+          role: 'भूमिका',
+          phone: 'फोन नंबर',
+          address: 'पता',
+          street: 'सड़क का पता',
+          city: 'शहर',
+          state: 'राज्य',
+          pincode: 'पिन कोड'
+        },
+        errors: {
+          nameRequired: 'नाम आवश्यक है',
+          nameMinLength: 'नाम कम से कम 2 अक्षर का होना चाहिए',
+          emailRequired: 'ईमेल आवश्यक है',
+          emailInvalid: 'कृपया एक वैध ईमेल पता दर्ज करें',
+          passwordRequired: 'पासवर्ड आवश्यक है',
+          passwordMinLength: 'पासवर्ड कम से कम 6 अक्षर का होना चाहिए',
+          confirmPasswordRequired: 'कृपया अपना पासवर्ड की पुष्टि करें',
+          passwordsNoMatch: 'पासवर्ड मेल नहीं खाते',
+          roleRequired: 'कृपया एक भूमिका चुनें',
+          phoneRequired: 'फोन नंबर आवश्यक है',
+          phoneInvalid: 'कृपया एक वैध 10-अंकीय फोन नंबर दर्ज करें',
+          streetRequired: 'सड़क का पता आवश्यक है',
+          cityRequired: 'शहर आवश्यक है',
+          stateRequired: 'राज्य आवश्यक है',
+          pincodeRequired: 'पिन कोड आवश्यक है',
+          pincodeInvalid: 'कृपया एक वैध 6-अंकीय पिन कोड दर्ज करें',
+          addressRequired: 'पता आवश्यक है',
+          registrationFailed: 'पंजीकरण असफल। कृपया पुनः प्रयास करें।'
+        },
+        password: {
+          veryWeak: 'बहुत कमजोर',
+          weak: 'कमजोर',
+          fair: 'ठीक',
+          good: 'अच्छा',
+          strong: 'मजबूत'
+        }
+      },
+      
+      // Home page
+      home: {
+        hero: {
+          title: 'ताजे अनाज के लिए डिजिटल मार्केटप्लेस',
+          subtitle: 'किसानों को सीधे खरीदारों से जोड़ें सबसे ताजे गुणवत्ता वाले अनाज के लिए',
+          cta: 'व्यापार शुरू करें',
+          learnMore: 'और जानें',
+          getStarted: 'शुरू करें',
+          browseGrains: 'अनाज देखें'
+        },
+        benefits: {
+          title: 'किसान क्यों चुनें?',
+          subtitle: 'हमारा प्लेटफॉर्म किसानों और खरीदारों के लिए सर्वोत्तम समाधान प्रदान करता है',
+          directConnection: 'किसानों और खरीदारों के बीच सीधा संपर्क',
+          transparentPricing: 'पारदर्शी और निष्पक्ष मूल्य निर्धारण',
+          qualityGuarantee: 'सभी उत्पादों के लिए गुणवत्ता का आश्वासन',
+          securePayments: 'सुरक्षित भुगतान प्रसंस्करण',
+          logisticsSupport: 'रसद और डिलीवरी सहायता',
+          multilingual: 'बहुभाषी प्लेटफॉर्म सहायता',
+          joinCommunity: 'हमारे समुदाय में शामिल हों',
+          communityDescription: 'भारत भर के हजारों किसानों और खरीदारों से जुड़ें'
+        },
+        features: {
+          title: 'किसान क्यों चुनें?',
+          subtitle: 'हमारा प्लेटफॉर्म किसानों और खरीदारों के लिए सर्वोत्तम समाधान प्रदान करता है',
+          qualityAssurance: {
+            title: 'गुणवत्ता का आश्वासन',
+            description: 'सभी अनाज गुणवत्ता और ताजगी के लिए सत्यापित हैं'
+          },
+          fairPricing: {
+            title: 'निष्पक्ष मूल्य निर्धारण',
+            description: 'बिना किसी छुपी लागत के पारदर्शी मूल्य निर्धारण'
+          },
+          logistics: {
+            title: 'रसद सहायता',
+            description: 'अंत से अंत तक डिलीवरी और रसद सहायता'
+          },
+          community: {
+            title: 'समुदाय',
+            description: 'हजारों किसानों और खरीदारों से जुड़ें'
+          },
+          direct: {
+            title: 'प्रत्यक्ष व्यापार',
+            description: 'कोई बिचौलिया नहीं - किसान सीधे खरीदारों को बेचते हैं'
+          },
+          quality: {
+            title: 'गुणवत्ता का आश्वासन',
+            description: 'सभी अनाज गुणवत्ता और ताजगी के लिए सत्यापित हैं'
+          },
+          secure: {
+            title: 'सुरक्षित भुगतान',
+            description: 'सुरक्षित और संरक्षित भुगतान प्रसंस्करण'
+          },
+          support: {
+            title: '24/7 सहायता',
+            description: 'चौबीसों घंटे ग्राहक सहायता'
+          }
+        },
+        stats: {
+          farmers: 'सक्रिय किसान',
+          buyers: 'खुश खरीदार',
+          grains: 'अनाज की किस्में',
+          orders: 'पूर्ण ऑर्डर',
+          quintals: 'बेचे गए क्विंटल',
+          cities: 'सेवा दिए गए शहर'
+        }
+      },
+
+      // Buyer specific
+      buyer: {
+        browseGrains: 'अनाज देखें',
+        myOrders: 'मेरे ऑर्डर',
+        orderHistory: 'ऑर्डर इतिहास',
+        wishlist: 'इच्छा सूची',
+        dashboard: {
+          title: 'खरीदार डैशबोर्ड'
+        }
+      },
+
+      // Order Status
+      orderStatus: {
+        pending: 'लंबित',
+        confirmed: 'पुष्टि की गई',
+        paid: 'भुगतान किया गया',
+        shipped: 'भेज दिया गया',
+        delivered: 'पहुंचाया गया',
+        cancelled: 'रद्द किया गया'
+      },
+
+      // Footer
+      footer: {
+        company: 'कंपनी',
+        forFarmers: 'किसानों के लिए',
+        forBuyers: 'खरीदारों के लिए',
+        support: 'सहायता',
+        aboutUs: 'हमारे बारे में',
+        howItWorks: 'यह कैसे काम करता है',
+        careers: 'करियर',
+        blog: 'ब्लॉग',
+        sellGrain: 'अनाज बेचें',
+        farmerGuide: 'किसान गाइड',
+        qualityStandards: 'गुणवत्ता मानक',
+        pricing: 'मूल्य निर्धारण',
+        browseGrains: 'अनाज देखें',
+        buyerGuide: 'खरीदार गाइड',
+        bulkOrders: 'बल्क ऑर्डर',
+        logistics: 'रसद',
+        helpCenter: 'सहायता केंद्र',
+        contactUs: 'संपर्क करें',
+        faq: 'अक्सर पूछे जाने वाले प्रश्न',
+        reportIssue: 'समस्या रिपोर्ट करें',
+        privacyPolicy: 'गोपनीयता नीति',
+        termsOfService: 'सेवा की शर्तें',
+        cookiePolicy: 'कुकी नीति',
+        refundPolicy: 'रिफंड नीति',
+        getInTouch: 'संपर्क में रहें',
+        phone: 'फोन',
+        email: 'ईमेल',
+        address: 'पता',
+        addressText: '123 कृषि स्ट्रीट, नई दिल्ली, भारत',
+        newsletter: 'न्यूज़लेटर',
+        newsletterDescription: 'ताजे अनाज और बाजार की कीमतों पर अपडेट पाने के लिए सब्सक्राइब करें',
+        emailPlaceholder: 'अपना ईमेल दर्ज करें',
+        subscribe: 'सब्सक्राइब करें',
+        copyright: '© 2024 किसान। सभी अधिकार सुरक्षित।',
+        description: 'ताजे अनाज के लिए किसानों और खरीदारों को जोड़ने वाला डिजिटल मार्केटप्लेस'
+      },
+      
+      // Messages
+      messages: {
+        success: {
+          loginSuccess: 'लॉगिन सफल!',
+          registerSuccess: 'पंजीकरण सफल!',
+          profileUpdated: 'प्रोफाइल सफलतापूर्वक अपडेट की गई!',
+          grainAdded: 'अनाज लिस्टिंग सफलतापूर्वक जोड़ी गई!',
+          orderPlaced: 'ऑर्डर सफलतापूर्वक दिया गया!',
+          passwordChanged: 'पासवर्ड सफलतापूर्वक बदला गया!'
+        },
+        error: {
+          loginFailed: 'लॉगिन असफल। कृपया अपनी साख जाँचें।',
+          registerFailed: 'पंजीकरण असफल। कृपया पुनः प्रयास करें।',
+          networkError: 'नेटवर्क त्रुटि। कृपया अपना कनेक्शन जाँचें।',
+          somethingWrong: 'कुछ गलत हुआ। कृपया पुनः प्रयास करें।',
+          unauthorized: 'आप इस कार्य को करने के लिए अधिकृत नहीं हैं।',
+          notFound: 'अनुरोधित संसाधन नहीं मिला।'
+        }
+      }
+    }
+  }
+};
+
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    resources,
+    fallbackLng: 'en',
+    debug: process.env.NODE_ENV === 'development',
+    
+    interpolation: {
+      escapeValue: false, // React already escapes by default
+    },
+    
+    detection: {
+      order: ['localStorage', 'navigator', 'htmlTag'],
+      caches: ['localStorage'],
+    },
+  });
+
+export default i18n;
