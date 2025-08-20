@@ -8,7 +8,9 @@ export const login = async (email, password) => {
 };
 
 export const register = async (userData) => {
+  console.log('🌐 AuthService register call:', userData);
   const response = await api.post('/auth/register', userData);
+  console.log('🌐 AuthService register response:', response.data);
   return response.data;
 };
 

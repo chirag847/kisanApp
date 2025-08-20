@@ -12,7 +12,8 @@
     "install:server": "cd server && npm install",
     "install:client": "cd client && npm install", 
     "install:all": "npm run install:server && npm run install:client",
-    "seed": "cd server && npm run seed"
+    "seed": "cd server && npm run seed",
+    "seed:grains": "node seed-grains.js"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

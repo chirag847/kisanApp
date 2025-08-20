@@ -143,7 +143,7 @@ const AddGrain = () => {
     setIsLoading(true);
 
     try {
-      // Create grain
+      // Create grain with images
       const grainData = {
         ...formData,
         quantity: parseFloat(formData.quantity),
@@ -153,17 +153,8 @@ const AddGrain = () => {
       };
 
       console.log('📤 Submitting grain data:', JSON.stringify(grainData, null, 2));
-      const response = await createGrain(grainData);
-      
-      // Upload images if any
-      if (images.length > 0 && response.data?.grain?._id) {
-        const formDataImages = new FormData();
-        images.forEach(image => {
-          formDataImages.append('grainImages', image);
-        });
-        
-        await uploadGrainImages(response.data.grain._id, formDataImages);
-      }
+      console.log('📸 Including images:', images.length);
+      const response = await createGrain(grainData, images);
 
       navigate('/farmer/dashboard', { 
         state: { message: 'Grain added successfully!' }
@@ -197,9 +188,9 @@ const AddGrain = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-lg shadow-sm p-8"
+          className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8"
         >
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
             Add New Grain
           </h1>
 
@@ -207,7 +198,7 @@ const AddGrain = () => {
             {/* Basic Information */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Grain Title *
                 </label>
                 <input
@@ -215,7 +206,7 @@ const AddGrain = () => {
                   name="title"
                   value={formData.title}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                   placeholder="e.g., Premium Basmati Rice (min 5 characters)"
                   minLength={5}
                   maxLength={100}
@@ -224,14 +215,14 @@ const AddGrain = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Grain Type *
                 </label>
                 <select
                   name="grainType"
                   value={formData.grainType}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 >
                   <option value="">Select grain type</option>
                   {grainTypes.map(type => (
@@ -244,7 +235,7 @@ const AddGrain = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Variety *
                 </label>
                 <input
@@ -252,21 +243,21 @@ const AddGrain = () => {
                   name="variety"
                   value={formData.variety}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                   placeholder="e.g., Basmati 1121"
                 />
                 {errors.variety && <p className="text-red-500 text-sm mt-1">{errors.variety}</p>}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Quality Grade *
                 </label>
                 <select
                   name="qualityGrade"
                   value={formData.qualityGrade}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 >
                   <option value="">Select quality grade</option>
                   {qualityGrades.map(grade => (
@@ -282,7 +273,7 @@ const AddGrain = () => {
             {/* Quantity and Pricing */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Available Quantity (Quintals) *
                 </label>
                 <input
@@ -293,14 +284,14 @@ const AddGrain = () => {
                   min="0.1"
                   max="10000"
                   step="0.1"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                   placeholder="e.g., 100 (0.1 - 10000)"
                 />
                 {errors.quantity && <p className="text-red-500 text-sm mt-1">{errors.quantity}</p>}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Price per Quintal (₹) *
                 </label>
                 <input
@@ -311,14 +302,14 @@ const AddGrain = () => {
                   min="100"
                   max="50000"
                   step="1"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                   placeholder="₹100 - ₹50,000 (e.g., 2500)"
                 />
                 {errors.pricePerQuintal && <p className="text-red-500 text-sm mt-1">{errors.pricePerQuintal}</p>}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Minimum Order (Quintals)
                 </label>
                 <input
@@ -328,7 +319,7 @@ const AddGrain = () => {
                   onChange={handleChange}
                   min="0"
                   step="0.1"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                   placeholder="e.g., 1"
                 />
               </div>
@@ -336,7 +327,7 @@ const AddGrain = () => {
 
             {/* Harvest Date */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Harvest Date *
               </label>
               <input
@@ -345,14 +336,14 @@ const AddGrain = () => {
                 value={formData.harvestDate}
                 onChange={handleChange}
                 max={new Date().toISOString().split('T')[0]}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               />
               {errors.harvestDate && <p className="text-red-500 text-sm mt-1">{errors.harvestDate}</p>}
             </div>
 
             {/* Description */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Description *
               </label>
               <textarea
@@ -362,12 +353,12 @@ const AddGrain = () => {
                 rows={4}
                 minLength={20}
                 maxLength={1000}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                 placeholder="Describe your grain quality, storage conditions, etc. (min 20 characters)"
               />
               <div className="flex justify-between items-center mt-1">
                 {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
-                <p className="text-gray-500 text-sm ml-auto">
+                <p className="text-gray-500 dark:text-gray-400 text-sm ml-auto">
                   {formData.description.length}/1000 characters (min 20)
                 </p>
               </div>
@@ -375,11 +366,11 @@ const AddGrain = () => {
 
             {/* Location Information */}
             <div className="space-y-4">
-              <h3 className="text-lg font-medium text-gray-900">Location Details</h3>
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white">Location Details</h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Address *
                   </label>
                   <input
@@ -387,14 +378,14 @@ const AddGrain = () => {
                     name="location.address"
                     value={formData.location.address}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     placeholder="Enter your complete address"
                   />
                   {errors['location.address'] && <p className="text-red-500 text-sm mt-1">{errors['location.address']}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     City *
                   </label>
                   <input
@@ -402,14 +393,14 @@ const AddGrain = () => {
                     name="location.city"
                     value={formData.location.city}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     placeholder="Enter city"
                   />
                   {errors['location.city'] && <p className="text-red-500 text-sm mt-1">{errors['location.city']}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     State *
                   </label>
                   <input
@@ -417,14 +408,14 @@ const AddGrain = () => {
                     name="location.state"
                     value={formData.location.state}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     placeholder="Enter state"
                   />
                   {errors['location.state'] && <p className="text-red-500 text-sm mt-1">{errors['location.state']}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Pincode *
                   </label>
                   <input
@@ -432,7 +423,7 @@ const AddGrain = () => {
                     name="location.pincode"
                     value={formData.location.pincode}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     placeholder="Enter 6-digit pincode"
                     maxLength={6}
                   />
@@ -457,7 +448,7 @@ const AddGrain = () => {
 
             {/* Image Upload */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Grain Images (Max 5)
               </label>
               <input
@@ -465,9 +456,9 @@ const AddGrain = () => {
                 multiple
                 accept="image/*"
                 onChange={handleImageChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-green-50 dark:file:bg-green-900 file:text-green-700 dark:file:text-green-300 hover:file:bg-green-100 dark:hover:file:bg-green-800"
               />
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                 Upload clear images of your grain. Maximum 5 images allowed.
               </p>
             </div>

@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { AuthContext } from './contexts/AuthContext';
+import { useTheme } from './contexts/ThemeContext';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import LoadingSpinner from './components/common/LoadingSpinner';
@@ -61,17 +62,18 @@ const pageTransition = {
 
 function App() {
   const { loading } = useContext(AuthContext);
+  const { isDarkMode } = useTheme();
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-neutral-50">
+      <div className={`${isDarkMode ? 'dark' : ''} min-h-screen flex items-center justify-center bg-white dark:bg-gray-900`}>
         <LoadingSpinner size="large" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50 flex flex-col">
+    <div className={`${isDarkMode ? 'dark' : ''} min-h-screen bg-white dark:bg-gray-900 flex flex-col transition-colors duration-200`}>
       <Helmet>
         <title>Kisaan - Digital Grain Marketplace</title>
         <meta name="description" content="Connect farmers with buyers for fresh, quality grains" />

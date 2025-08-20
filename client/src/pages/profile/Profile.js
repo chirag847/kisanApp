@@ -220,7 +220,7 @@ const Profile = () => {
                 <h3 className="text-lg font-medium text-gray-900">Basic Information</h3>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Full Name
                   </label>
                   {isEditing ? (
@@ -229,10 +229,10 @@ const Profile = () => {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     />
                   ) : (
-                    <div className="flex items-center text-gray-900">
+                    <div className="flex items-center text-gray-900 dark:text-white">
                       <UserIcon className="w-5 h-5 text-gray-400 mr-2" />
                       {user.name}
                     </div>
@@ -241,7 +241,7 @@ const Profile = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Email Address
                   </label>
                   {isEditing ? (
@@ -250,10 +250,10 @@ const Profile = () => {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     />
                   ) : (
-                    <div className="flex items-center text-gray-900">
+                    <div className="flex items-center text-gray-900 dark:text-white">
                       <EnvelopeIcon className="w-5 h-5 text-gray-400 mr-2" />
                       {user.email}
                     </div>
@@ -262,7 +262,7 @@ const Profile = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Phone Number
                   </label>
                   {isEditing ? (
@@ -271,10 +271,10 @@ const Profile = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     />
                   ) : (
-                    <div className="flex items-center text-gray-900">
+                    <div className="flex items-center text-gray-900 dark:text-white">
                       <PhoneIcon className="w-5 h-5 text-gray-400 mr-2" />
                       {user.phone || 'Not provided'}
                     </div>
@@ -288,7 +288,7 @@ const Profile = () => {
                 <h3 className="text-lg font-medium text-gray-900">Address Information</h3>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Street Address
                   </label>
                   {isEditing ? (
@@ -297,10 +297,10 @@ const Profile = () => {
                       name="address.street"
                       value={formData.address.street}
                       onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     />
                   ) : (
-                    <div className="text-gray-900">
+                    <div className="text-gray-900 dark:text-white">
                       {user.address?.street || 'Not provided'}
                     </div>
                   )}
@@ -308,7 +308,7 @@ const Profile = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       City
                     </label>
                     {isEditing ? (
@@ -317,17 +317,17 @@ const Profile = () => {
                         name="address.city"
                         value={formData.address.city}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       />
                     ) : (
-                      <div className="text-gray-900">
+                      <div className="text-gray-900 dark:text-white">
                         {user.address?.city || 'Not provided'}
                       </div>
                     )}
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       State
                     </label>
                     {isEditing ? (
@@ -336,10 +336,10 @@ const Profile = () => {
                         name="address.state"
                         value={formData.address.state}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       />
                     ) : (
-                      <div className="text-gray-900">
+                      <div className="text-gray-900 dark:text-white">
                         {user.address?.state || 'Not provided'}
                       </div>
                     )}
@@ -348,7 +348,7 @@ const Profile = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       Pincode
                     </label>
                     {isEditing ? (
@@ -357,26 +357,26 @@ const Profile = () => {
                         name="address.pincode"
                         value={formData.address.pincode}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       />
                     ) : (
-                      <div className="text-gray-900">
+                      <div className="text-gray-900 dark:text-white">
                         {user.address?.pincode || 'Not provided'}
                       </div>
                     )}
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       Country
                     </label>
-                    <div className="text-gray-900">
+                    <div className="text-gray-900 dark:text-white">
                       {user.address?.country || 'India'}
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center text-gray-900">
+                <div className="flex items-center text-gray-900 dark:text-white">
                   <MapPinIcon className="w-5 h-5 text-gray-400 mr-2" />
                   <span>
                     {user.address?.city && user.address?.state 

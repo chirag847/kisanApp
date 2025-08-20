@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import theme styles */
+@import './styles/theme.css';
+
 /* Base styles */
 @layer base {
   html {
@@ -11,8 +14,9 @@
   body {
     font-family: 'Poppins', system-ui, -apple-system, sans-serif;
     line-height: 1.6;
-    color: theme('colors.neutral.800');
-    background-color: theme('colors.neutral.50');
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   
   * {

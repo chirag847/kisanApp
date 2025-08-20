@@ -11,19 +11,38 @@ exports.createGrain = asyncHandler(async (req, res, next) => {
   console.log('🌾 User object:', JSON.stringify(req.user, null, 2));
   console.log('🌾 Files received:', req.files ? req.files.length : 'No files');
 
-  // Add farmer to req.body
-  req.body.farmer = req.user.id;
+  // Parse JSON strings for nested objects when using multipart/form-data
+  const grainData = { ...req.body };
+  
+  console.log('🌾 Raw location from req.body:', req.body.location);
+  console.log('🌾 Location type:', typeof req.body.location);
+  
+  // Parse location if it's a JSON string
+  if (typeof grainData.location === 'string') {
+    try {
+      console.log('🌾 Parsing location JSON string:', grainData.location);
+      grainData.location = JSON.parse(grainData.location);
+      console.log('🌾 Parsed location:', grainData.location);
+    } catch (error) {
+      console.error('🌾 Error parsing location JSON:', error);
+    }
+  } else {
+    console.log('🌾 Location is not a string, current value:', grainData.location);
+  }
+
+  // Add farmer to grain data
+  grainData.farmer = req.user.id;
 
   // Handle image uploads
   if (req.files && req.files.length > 0) {
-    req.body.images = req.files.map(file => ({
+    grainData.images = req.files.map(file => ({
       url: getFileUrl(req, file.path),
-      alt: `${req.body.grainType} ${req.body.variety} image`
+      alt: `${grainData.grainType} ${grainData.variety} image`
     }));
   }
 
   try {
-    const grain = await Grain.create(req.body);
+    const grain = await Grain.create(grainData);
     await grain.populate('farmer', 'name phone address.city address.state');
 
     console.log('🌾 Grain created successfully:', grain._id);

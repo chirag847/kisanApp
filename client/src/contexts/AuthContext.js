@@ -171,7 +171,9 @@ export const AuthProvider = ({ children }) => {
     try {
       dispatch({ type: AUTH_ACTIONS.AUTH_START });
       
+      console.log('🔄 Attempting registration with data:', userData);
       const response = await authRegister(userData);
+      console.log('✅ Registration response:', response);
       
       dispatch({
         type: AUTH_ACTIONS.AUTH_SUCCESS,
@@ -184,10 +186,11 @@ export const AuthProvider = ({ children }) => {
       toast.success('Registration successful!');
       return { success: true };
     } catch (error) {
-      const message = error.response?.data?.message || 'Registration failed';
+      console.error('❌ Registration error:', error);
+      const message = error.response?.data?.message || error.message || 'Registration failed';
       dispatch({ type: AUTH_ACTIONS.AUTH_FAIL, payload: message });
       toast.error(message);
-      return { success: false, error: message };
+      throw new Error(message);
     }
   };
 

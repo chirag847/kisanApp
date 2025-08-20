@@ -16,8 +16,39 @@ export const getGrainById = async (id) => {
   return response.data;
 };
 
-export const createGrain = async (grainData) => {
-  const response = await api.post('/grains', grainData);
+export const createGrain = async (grainData, images = []) => {
+  const formData = new FormData();
+  
+  console.log('🌐 Original grain data:', grainData);
+  
+  // Append grain data
+  Object.keys(grainData).forEach(key => {
+    if (grainData[key] !== null && grainData[key] !== undefined) {
+      if (typeof grainData[key] === 'object') {
+        console.log(`🌐 Appending ${key} as JSON:`, JSON.stringify(grainData[key]));
+        formData.append(key, JSON.stringify(grainData[key]));
+      } else {
+        console.log(`🌐 Appending ${key}:`, grainData[key]);
+        formData.append(key, grainData[key]);
+      }
+    }
+  });
+  
+  // Append images with correct field name
+  images.forEach(image => {
+    formData.append('grainImages', image);
+  });
+  
+  console.log('🌐 FormData entries:');
+  for (let [key, value] of formData.entries()) {
+    console.log(`${key}:`, value);
+  }
+  
+  const response = await api.post('/grains', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
   return response.data;
 };
 
@@ -59,7 +90,7 @@ export const getRecentGrains = async (limit = 10) => {
 export const uploadGrainImages = async (grainId, images) => {
   const formData = new FormData();
   images.forEach(image => {
-    formData.append('images', image);
+    formData.append('grainImages', image);
   });
   const response = await api.post(`/grains/${grainId}/images`, formData, {
     headers: {

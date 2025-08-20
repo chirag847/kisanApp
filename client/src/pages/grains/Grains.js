@@ -79,7 +79,7 @@ const Grains = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-lg shadow-sm p-6 mb-8"
+          className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8"
         >
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {/* Search */}
@@ -90,7 +90,7 @@ const Grains = () => {
                 placeholder="Search grains..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
               />
             </div>
 
@@ -99,7 +99,7 @@ const Grains = () => {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
                 {grainCategories.map(category => (
                   <option key={category} value={category}>
@@ -116,14 +116,14 @@ const Grains = () => {
                 placeholder="Min ₹"
                 value={priceRange.min}
                 onChange={(e) => setPriceRange(prev => ({ ...prev, min: e.target.value }))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
               />
               <input
                 type="number"
                 placeholder="Max ₹"
                 value={priceRange.max}
                 onChange={(e) => setPriceRange(prev => ({ ...prev, max: e.target.value }))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
               />
             </div>
 
@@ -134,7 +134,7 @@ const Grains = () => {
                 setSelectedCategory('all');
                 setPriceRange({ min: '', max: '' });
               }}
-              className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 focus:ring-2 focus:ring-green-500"
+              className="px-4 py-2 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 focus:ring-2 focus:ring-green-500 bg-white dark:bg-gray-800"
             >
               Reset
             </button>
@@ -184,29 +184,42 @@ const Grains = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden"
+                className="bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden"
               >
                 {/* Grain Image */}
-                <div className="h-48 bg-gradient-to-br from-green-100 to-yellow-100 flex items-center justify-center">
-                  <div className="text-4xl">🌾</div>
+                <div className="h-48 bg-gradient-to-br from-green-100 to-yellow-100 dark:from-green-900 dark:to-yellow-900 flex items-center justify-center overflow-hidden">
+                  {grain.images && grain.images.length > 0 ? (
+                    <img 
+                      src={grain.images[0].url} 
+                      alt={grain.images[0].alt || grain.title}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
+                    />
+                  ) : null}
+                  <div className="text-4xl flex items-center justify-center w-full h-full" style={{display: grain.images && grain.images.length > 0 ? 'none' : 'flex'}}>
+                    🌾
+                  </div>
                 </div>
 
                 {/* Grain Info */}
                 <div className="p-4">
-                  <h3 className="font-semibold text-gray-900 mb-2">{grain.name}</h3>
-                  <p className="text-sm text-gray-600 mb-2 capitalize">{grain.type}</p>
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{grain.title}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-2 capitalize">{grain.grainType} - {grain.variety}</p>
                   
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-lg font-bold text-green-600">
-                      ₹{grain.pricePerKg}/kg
+                    <span className="text-lg font-bold text-green-600 dark:text-green-400">
+                      ₹{Math.round(grain.pricePerQuintal / 100)}/kg
                     </span>
-                    <span className="text-sm text-gray-500">
-                      {grain.quantity} kg available
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                      {grain.availableQuantity} quintals
                     </span>
                   </div>
 
-                  <div className="text-sm text-gray-600 mb-3">
-                    📍 {grain.farmer?.address?.city || 'Location not specified'}
+                  <div className="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                    📍 {grain.location?.city || 'Location not specified'}
                   </div>
 
                   <div className="flex space-x-2">
@@ -216,7 +229,7 @@ const Grains = () => {
                     >
                       View Details
                     </Link>
-                    <button className="flex-1 px-3 py-2 border border-green-600 text-green-600 text-sm rounded-md hover:bg-green-50 transition-colors">
+                    <button className="flex-1 px-3 py-2 border border-green-600 dark:border-green-500 text-green-600 dark:text-green-400 text-sm rounded-md hover:bg-green-50 dark:hover:bg-green-900 transition-colors">
                       Contact Farmer
                     </button>
                   </div>

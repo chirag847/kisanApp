@@ -13,10 +13,12 @@ import {
 } from '@heroicons/react/24/outline';
 
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 const Home = () => {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const { isDarkMode } = useTheme();
 
   const features = [
     {
@@ -82,17 +84,17 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className={`${isDarkMode ? 'dark' : ''} min-h-screen`}>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary-50 to-secondary-50 overflow-hidden">
-        <div className="absolute inset-0 bg-white/40"></div>
+      <section className="relative bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-gray-900 dark:to-gray-800 overflow-hidden">
+        <div className="absolute inset-0 bg-white/40 dark:bg-black/20"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24">
           <div className="text-center">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-4xl md:text-6xl font-bold text-gray-900 mb-6"
+              className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6"
             >
               {t('home.hero.title')}
             </motion.h1>

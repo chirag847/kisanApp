@@ -139,8 +139,8 @@ const Register = () => {
 
     if (!formData.address.pincode.trim()) {
       newErrors['address.pincode'] = t('auth.errors.pincodeRequired');
-    } else if (!/^\d{6}$/.test(formData.address.pincode)) {
-      newErrors['address.pincode'] = t('auth.errors.pincodeInvalid');
+    } else if (!/^[1-9][0-9]{5}$/.test(formData.address.pincode)) {
+      newErrors['address.pincode'] = 'Please enter a valid 6-digit pincode (cannot start with 0)';
     }
 
     setErrors(newErrors);
@@ -200,7 +200,7 @@ const Register = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -208,14 +208,14 @@ const Register = () => {
           transition={{ duration: 0.5 }}
           className="text-center"
         >
-          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-6 text-3xl font-extrabold text-gray-900 dark:text-white">
             {t('auth.register.title')}
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
             {t('auth.register.subtitle')}{' '}
             <Link
               to="/login"
-              className="font-medium text-green-600 hover:text-green-500"
+              className="font-medium text-green-600 hover:text-green-500 dark:text-green-400 dark:hover:text-green-300"
             >
               {t('auth.loginBtn')}
             </Link>
@@ -228,26 +228,26 @@ const Register = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10"
+          className="bg-white dark:bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10"
         >
           {/* Step indicator */}
           <div className="mb-8">
             <div className="flex items-center">
               <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
-                currentStep >= 1 ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-600'
+                currentStep >= 1 ? 'bg-green-600 text-white' : 'bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-300'
               }`}>
                 1
               </div>
               <div className={`flex-1 h-1 mx-2 ${
-                currentStep >= 2 ? 'bg-green-600' : 'bg-gray-300'
+                currentStep >= 2 ? 'bg-green-600' : 'bg-gray-300 dark:bg-gray-600'
               }`}></div>
               <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
-                currentStep >= 2 ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-600'
+                currentStep >= 2 ? 'bg-green-600 text-white' : 'bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-300'
               }`}>
                 2
               </div>
             </div>
-            <div className="flex justify-between mt-2 text-sm text-gray-600">
+            <div className="flex justify-between mt-2 text-sm text-gray-600 dark:text-gray-300">
               <span>{t('auth.register.step1')}</span>
               <span>{t('auth.register.step2')}</span>
             </div>
@@ -264,7 +264,7 @@ const Register = () => {
               <form className="space-y-6">
                 {/* Name */}
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     {t('auth.fields.name')}
                   </label>
                   <div className="mt-1">
@@ -277,8 +277,8 @@ const Register = () => {
                       value={formData.name}
                       onChange={handleChange}
                       className={`appearance-none block w-full px-3 py-2 border ${
-                        errors.name ? 'border-red-300' : 'border-gray-300'
-                      } rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm`}
+                        errors.name ? 'border-red-300' : 'border-gray-300 dark:border-gray-600'
+                      } rounded-md placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
                       placeholder={t('auth.placeholders.name')}
                     />
                   </div>
@@ -289,7 +289,7 @@ const Register = () => {
 
                 {/* Email */}
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     {t('auth.fields.email')}
                   </label>
                   <div className="mt-1">
@@ -302,8 +302,8 @@ const Register = () => {
                       value={formData.email}
                       onChange={handleChange}
                       className={`appearance-none block w-full px-3 py-2 border ${
-                        errors.email ? 'border-red-300' : 'border-gray-300'
-                      } rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm`}
+                        errors.email ? 'border-red-300' : 'border-gray-300 dark:border-gray-600'
+                      } rounded-md placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
                       placeholder={t('auth.placeholders.email')}
                     />
                   </div>
@@ -314,7 +314,7 @@ const Register = () => {
 
                 {/* Password */}
                 <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     {t('auth.fields.password')}
                   </label>
                   <div className="mt-1 relative">
@@ -327,8 +327,8 @@ const Register = () => {
                       value={formData.password}
                       onChange={handleChange}
                       className={`appearance-none block w-full px-3 py-2 pr-10 border ${
-                        errors.password ? 'border-red-300' : 'border-gray-300'
-                      } rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm`}
+                        errors.password ? 'border-red-300' : 'border-gray-300 dark:border-gray-600'
+                      } rounded-md placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
                       placeholder={t('auth.placeholders.password')}
                     />
                     <button
@@ -337,9 +337,9 @@ const Register = () => {
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? (
-                        <EyeSlashIcon className="h-5 w-5 text-gray-400" />
+                        <EyeSlashIcon className="h-5 w-5 text-gray-400 dark:text-gray-500" />
                       ) : (
-                        <EyeIcon className="h-5 w-5 text-gray-400" />
+                        <EyeIcon className="h-5 w-5 text-gray-400 dark:text-gray-500" />
                       )}
                     </button>
                   </div>
@@ -355,12 +355,12 @@ const Register = () => {
                           <div
                             key={i}
                             className={`h-1 flex-1 rounded ${
-                              i < passwordStrength() ? strengthColors[passwordStrength() - 1] : 'bg-gray-200'
+                              i < passwordStrength() ? strengthColors[passwordStrength() - 1] : 'bg-gray-200 dark:bg-gray-600'
                             }`}
                           />
                         ))}
                       </div>
-                      <p className="mt-1 text-xs text-gray-600">
+                      <p className="mt-1 text-xs text-gray-600 dark:text-gray-400">
                         {strengthLabels[passwordStrength() - 1] || strengthLabels[0]}
                       </p>
                     </div>
@@ -369,7 +369,7 @@ const Register = () => {
 
                 {/* Confirm Password */}
                 <div>
-                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     {t('auth.fields.confirmPassword')}
                   </label>
                   <div className="mt-1 relative">
@@ -382,8 +382,8 @@ const Register = () => {
                       value={formData.confirmPassword}
                       onChange={handleChange}
                       className={`appearance-none block w-full px-3 py-2 pr-10 border ${
-                        errors.confirmPassword ? 'border-red-300' : 'border-gray-300'
-                      } rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm`}
+                        errors.confirmPassword ? 'border-red-300' : 'border-gray-300 dark:border-gray-600'
+                      } rounded-md placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
                       placeholder={t('auth.placeholders.confirmPassword')}
                     />
                     <button
@@ -392,9 +392,9 @@ const Register = () => {
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     >
                       {showConfirmPassword ? (
-                        <EyeSlashIcon className="h-5 w-5 text-gray-400" />
+                        <EyeSlashIcon className="h-5 w-5 text-gray-400 dark:text-gray-500" />
                       ) : (
-                        <EyeIcon className="h-5 w-5 text-gray-400" />
+                        <EyeIcon className="h-5 w-5 text-gray-400 dark:text-gray-500" />
                       )}
                     </button>
                   </div>
@@ -405,7 +405,7 @@ const Register = () => {
 
                 {/* Role */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     {t('auth.fields.role')}
                   </label>
                   <div className="mt-2 space-y-2">
@@ -417,9 +417,9 @@ const Register = () => {
                         value="farmer"
                         checked={formData.role === 'farmer'}
                         onChange={handleChange}
-                        className="focus:ring-green-500 h-4 w-4 text-green-600 border-gray-300"
+                        className="focus:ring-green-500 h-4 w-4 text-green-600 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
                       />
-                      <label htmlFor="farmer" className="ml-3 block text-sm font-medium text-gray-700">
+                      <label htmlFor="farmer" className="ml-3 block text-sm font-medium text-gray-700 dark:text-gray-300">
                         Farmer (Sell grains)
                       </label>
                     </div>
@@ -431,9 +431,9 @@ const Register = () => {
                         value="buyer"
                         checked={formData.role === 'buyer'}
                         onChange={handleChange}
-                        className="focus:ring-green-500 h-4 w-4 text-green-600 border-gray-300"
+                        className="focus:ring-green-500 h-4 w-4 text-green-600 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
                       />
-                      <label htmlFor="buyer" className="ml-3 block text-sm font-medium text-gray-700">
+                      <label htmlFor="buyer" className="ml-3 block text-sm font-medium text-gray-700 dark:text-gray-300">
                         Buyer (Buy grains)
                       </label>
                     </div>
@@ -467,7 +467,7 @@ const Register = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Phone */}
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     {t('auth.fields.phone')}
                   </label>
                   <div className="mt-1">
@@ -480,8 +480,8 @@ const Register = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       className={`appearance-none block w-full px-3 py-2 border ${
-                        errors.phone ? 'border-red-300' : 'border-gray-300'
-                      } rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm`}
+                        errors.phone ? 'border-red-300' : 'border-gray-300 dark:border-gray-600'
+                      } rounded-md placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
                       placeholder={t('auth.placeholders.phone')}
                     />
                   </div>
@@ -492,7 +492,7 @@ const Register = () => {
 
                 {/* Address fields */}
                 <div>
-                  <label htmlFor="address.street" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="address.street" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     {t('auth.fields.street')}
                   </label>
                   <div className="mt-1">
@@ -504,8 +504,8 @@ const Register = () => {
                       value={formData.address.street}
                       onChange={handleChange}
                       className={`appearance-none block w-full px-3 py-2 border ${
-                        errors['address.street'] ? 'border-red-300' : 'border-gray-300'
-                      } rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm`}
+                        errors['address.street'] ? 'border-red-300' : 'border-gray-300 dark:border-gray-600'
+                      } rounded-md placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
                       placeholder={t('auth.placeholders.street')}
                     />
                   </div>
@@ -516,7 +516,7 @@ const Register = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="address.city" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="address.city" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       {t('auth.fields.city')}
                     </label>
                     <div className="mt-1">
@@ -528,8 +528,8 @@ const Register = () => {
                         value={formData.address.city}
                         onChange={handleChange}
                         className={`appearance-none block w-full px-3 py-2 border ${
-                          errors['address.city'] ? 'border-red-300' : 'border-gray-300'
-                        } rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm`}
+                          errors['address.city'] ? 'border-red-300' : 'border-gray-300 dark:border-gray-600'
+                        } rounded-md placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
                         placeholder={t('auth.placeholders.city')}
                       />
                     </div>
@@ -539,7 +539,7 @@ const Register = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="address.state" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="address.state" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       {t('auth.fields.state')}
                     </label>
                     <div className="mt-1">
@@ -551,8 +551,8 @@ const Register = () => {
                         value={formData.address.state}
                         onChange={handleChange}
                         className={`appearance-none block w-full px-3 py-2 border ${
-                          errors['address.state'] ? 'border-red-300' : 'border-gray-300'
-                        } rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm`}
+                          errors['address.state'] ? 'border-red-300' : 'border-gray-300 dark:border-gray-600'
+                        } rounded-md placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
                         placeholder={t('auth.placeholders.state')}
                       />
                     </div>
@@ -563,7 +563,7 @@ const Register = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="address.pincode" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="address.pincode" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     {t('auth.fields.pincode')}
                   </label>
                   <div className="mt-1">
@@ -575,8 +575,8 @@ const Register = () => {
                       value={formData.address.pincode}
                       onChange={handleChange}
                       className={`appearance-none block w-full px-3 py-2 border ${
-                        errors['address.pincode'] ? 'border-red-300' : 'border-gray-300'
-                      } rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm`}
+                        errors['address.pincode'] ? 'border-red-300' : 'border-gray-300 dark:border-gray-600'
+                      } rounded-md placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
                       placeholder={t('auth.placeholders.pincode')}
                     />
                   </div>
@@ -586,8 +586,8 @@ const Register = () => {
                 </div>
 
                 {errors.submit && (
-                  <div className="rounded-md bg-red-50 p-4">
-                    <p className="text-sm text-red-600">{errors.submit}</p>
+                  <div className="rounded-md bg-red-50 dark:bg-red-900/50 p-4">
+                    <p className="text-sm text-red-600 dark:text-red-400">{errors.submit}</p>
                   </div>
                 )}
 
@@ -595,7 +595,7 @@ const Register = () => {
                   <button
                     type="button"
                     onClick={handlePrev}
-                    className="flex-1 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                    className="flex-1 py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                   >
                     {t('auth.register.back')}
                   </button>

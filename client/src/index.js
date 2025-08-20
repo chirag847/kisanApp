@@ -10,9 +10,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import App from './App';
 import { AuthProvider } from './contexts/AuthContext';
-import { LanguageProvider } from './contexts/LanguageContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import './i18n';
 import './index.css';
+import './styles/theme.css';
 
 // Create a query client
 const queryClient = new QueryClient({
@@ -32,7 +33,7 @@ root.render(
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <LanguageProvider>
+          <ThemeProvider>
             <AuthProvider>
               <App />
               <Toaster
@@ -74,7 +75,7 @@ root.render(
                 pauseOnHover
               />
             </AuthProvider>
-          </LanguageProvider>
+          </ThemeProvider>
         </BrowserRouter>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
