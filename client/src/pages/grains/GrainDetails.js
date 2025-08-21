@@ -12,6 +12,7 @@ import {
 import { getGrainById } from '../../services/grainService';
 import { useAuth } from '../../contexts/AuthContext';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import GrainImage from '../../components/common/GrainImage';
 
 const GrainDetails = () => {
   const { id } = useParams();
@@ -130,22 +131,7 @@ const GrainDetails = () => {
             animate={{ opacity: 1, x: 0 }}
             className="space-y-4"
           >
-            <div className="aspect-w-1 aspect-h-1 bg-gradient-to-br from-green-100 to-yellow-100 rounded-lg overflow-hidden">
-              {grain.images && grain.images.length > 0 ? (
-                <img 
-                  src={grain.images[0].url} 
-                  alt={grain.images[0].alt || grain.title}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    e.target.nextSibling.style.display = 'flex';
-                  }}
-                />
-              ) : null}
-              <div className="flex items-center justify-center h-96" style={{display: grain.images && grain.images.length > 0 ? 'none' : 'flex'}}>
-                <span className="text-8xl">🌾</span>
-              </div>
-            </div>
+            <GrainImage grain={grain} />
             
             {/* Additional Images */}
             {grain.images && grain.images.length > 1 && (

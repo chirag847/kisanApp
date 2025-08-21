@@ -6,12 +6,13 @@ const LoadingSpinner = ({ size = 'medium', color = 'primary', className = '' }) 
     small: 'h-4 w-4',
     medium: 'h-8 w-8',
     large: 'h-12 w-12',
+    lg: 'h-12 w-12', // alias for large
     xlarge: 'h-16 w-16'
   };
 
   const colorClasses = {
-    primary: 'border-primary-600',
-    secondary: 'border-secondary-600',
+    primary: 'border-green-600',
+    secondary: 'border-blue-600',
     white: 'border-white',
     gray: 'border-gray-600'
   };

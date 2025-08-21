@@ -11,11 +11,14 @@ const grainRoutes = require('./routes/grains');
 const orderRoutes = require('./routes/orders');
 const adminRoutes = require('./routes/admin');
 const userRoutes = require('./routes/users');
+const { serveUploads } = require('./middleware/upload');
 
 const app = express();
 
 // Security middleware
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: false, // Disable CSP for development
+}));
 app.use(cors({
   origin: [
     process.env.CLIENT_URL || 'http://localhost:3000',
@@ -28,7 +31,7 @@ app.use(cors({
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  max: 1000, // limit each IP to 1000 requests per windowMs (increased from 100)
   message: 'Too many requests from this IP, please try again later.'
 });
 app.use('/api/', limiter);
@@ -37,6 +40,18 @@ app.use('/api/', limiter);
 app.use(morgan('combined'));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Serve uploaded files - using Express static middleware
+app.use('/uploads', express.static('uploads', {
+  setHeaders: (res, path, stat) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', 'GET');
+    res.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  }
+}));
+
+// Fallback custom middleware for uploads
+app.use(serveUploads);
 
 // Routes
 app.use('/api/v1/auth', authRoutes);

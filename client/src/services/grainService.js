@@ -21,10 +21,17 @@ export const createGrain = async (grainData, images = []) => {
   
   console.log('🌐 Original grain data:', grainData);
   
-  // Append grain data
+  // Append grain data, handling location specially
   Object.keys(grainData).forEach(key => {
     if (grainData[key] !== null && grainData[key] !== undefined) {
-      if (typeof grainData[key] === 'object') {
+      if (key === 'location' && typeof grainData[key] === 'object') {
+        // Send location fields individually instead of as JSON
+        console.log('🌐 Appending location fields individually:', grainData[key]);
+        if (grainData[key].address) formData.append('location.address', grainData[key].address);
+        if (grainData[key].city) formData.append('location.city', grainData[key].city);
+        if (grainData[key].state) formData.append('location.state', grainData[key].state);
+        if (grainData[key].pincode) formData.append('location.pincode', grainData[key].pincode);
+      } else if (typeof grainData[key] === 'object') {
         console.log(`🌐 Appending ${key} as JSON:`, JSON.stringify(grainData[key]));
         formData.append(key, JSON.stringify(grainData[key]));
       } else {
@@ -102,5 +109,10 @@ export const uploadGrainImages = async (grainId, images) => {
 
 export const deleteGrainImage = async (grainId, imageId) => {
   const response = await api.delete(`/grains/${grainId}/images/${imageId}`);
+  return response.data;
+};
+
+export const updateGrainStatus = async (grainId, status) => {
+  const response = await api.put(`/grains/${grainId}/status`, { status });
   return response.data;
 };

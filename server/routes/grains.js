@@ -9,7 +9,8 @@ const {
   getMyGrains,
   uploadGrainImages,
   likeGrain,
-  searchGrains
+  searchGrains,
+  updateGrainStatus
 } = require('../controllers/grainController');
 const { protect, authorize, checkOwnership } = require('../middleware/auth');
 const { handleValidationErrors } = require('../middleware/error');
@@ -168,6 +169,19 @@ router.post('/',
 );
 
 router.get('/my/listings', authorize('farmer'), getMyGrains);
+
+// Update grain status
+router.put('/:id/status', 
+  protect,
+  authorize('farmer'), 
+  [
+    body('status')
+      .isIn(['pending', 'active', 'sold', 'inactive'])
+      .withMessage('Status must be one of: pending, active, sold, inactive')
+  ],
+  handleValidationErrors,
+  updateGrainStatus
+);
 
 router.put('/:id', 
   authorize('farmer'), 

@@ -6,7 +6,7 @@ import { getGrainById, updateGrain } from '../../services/grainService';
 import { toast } from 'react-toastify';
 
 const EditGrain = () => {
-  const { grainId } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   
@@ -37,12 +37,12 @@ const EditGrain = () => {
 
   useEffect(() => {
     fetchGrainDetails();
-  }, [grainId]);
+  }, [id]);
 
   const fetchGrainDetails = async () => {
     try {
-      const response = await getGrainById(grainId);
-      const grain = response.grain;
+      const response = await getGrainById(id);
+      const grain = response.data.grain;
       
       // Check if current user is the owner
       if (grain.farmer._id !== user._id) {
@@ -175,7 +175,7 @@ const EditGrain = () => {
         }
       });
 
-      const response = await updateGrain(grainId, submitData);
+      const response = await updateGrain(id, submitData);
       toast.success('Grain updated successfully!');
       navigate('/farmer/my-listings');
     } catch (error) {
@@ -188,42 +188,42 @@ const EditGrain = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading grain details...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 dark:border-green-400 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Loading grain details...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-lg shadow-md overflow-hidden"
+          className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden"
         >
           {/* Header */}
-          <div className="bg-green-600 text-white p-6">
+          <div className="bg-green-600 dark:bg-green-700 text-white p-6">
             <h1 className="text-2xl font-bold">Edit Grain Listing</h1>
-            <p className="text-green-100 mt-1">Update your grain information</p>
+            <p className="text-green-100 dark:text-green-200 mt-1">Update your grain information</p>
           </div>
 
           <form onSubmit={handleSubmit} className="p-6 space-y-6">
             {/* Basic Information */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Grain Type *
                 </label>
                 <select
                   name="type"
                   value={formData.type}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                    errors.type ? 'border-red-500' : 'border-gray-300'
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${
+                    errors.type ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                   }`}
                 >
                   <option value="">Select grain type</option>
@@ -235,7 +235,7 @@ const EditGrain = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Variety *
                 </label>
                 <input
@@ -244,15 +244,15 @@ const EditGrain = () => {
                   value={formData.variety}
                   onChange={handleInputChange}
                   placeholder="e.g., Basmati, Durum, etc."
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                    errors.variety ? 'border-red-500' : 'border-gray-300'
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${
+                    errors.variety ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                   }`}
                 />
                 {errors.variety && <p className="text-red-500 text-sm mt-1">{errors.variety}</p>}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Quantity (quintals) *
                 </label>
                 <input
@@ -263,15 +263,15 @@ const EditGrain = () => {
                   min="1"
                   step="0.1"
                   placeholder="Available quantity"
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                    errors.quantity ? 'border-red-500' : 'border-gray-300'
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${
+                    errors.quantity ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                   }`}
                 />
                 {errors.quantity && <p className="text-red-500 text-sm mt-1">{errors.quantity}</p>}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Price per Quintal (₹) *
                 </label>
                 <input
@@ -281,15 +281,15 @@ const EditGrain = () => {
                   onChange={handleInputChange}
                   min="1"
                   placeholder="Price per quintal"
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                    errors.pricePerQuintal ? 'border-red-500' : 'border-gray-300'
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${
+                    errors.pricePerQuintal ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                   }`}
                 />
                 {errors.pricePerQuintal && <p className="text-red-500 text-sm mt-1">{errors.pricePerQuintal}</p>}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Harvest Date *
                 </label>
                 <input
@@ -298,23 +298,23 @@ const EditGrain = () => {
                   value={formData.harvestDate}
                   onChange={handleInputChange}
                   max={new Date().toISOString().split('T')[0]}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                    errors.harvestDate ? 'border-red-500' : 'border-gray-300'
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${
+                    errors.harvestDate ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                   }`}
                 />
                 {errors.harvestDate && <p className="text-red-500 text-sm mt-1">{errors.harvestDate}</p>}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Quality Grade *
                 </label>
                 <select
                   name="qualityGrade"
                   value={formData.qualityGrade}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                    errors.qualityGrade ? 'border-red-500' : 'border-gray-300'
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${
+                    errors.qualityGrade ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                   }`}
                 >
                   <option value="">Select quality grade</option>
@@ -326,7 +326,7 @@ const EditGrain = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Moisture Content (%)
                 </label>
                 <input
@@ -338,8 +338,8 @@ const EditGrain = () => {
                   max="100"
                   step="0.1"
                   placeholder="Optional"
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                    errors.moistureContent ? 'border-red-500' : 'border-gray-300'
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${
+                    errors.moistureContent ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                   }`}
                 />
                 {errors.moistureContent && <p className="text-red-500 text-sm mt-1">{errors.moistureContent}</p>}
@@ -352,9 +352,9 @@ const EditGrain = () => {
                     name="organicCertified"
                     checked={formData.organicCertified}
                     onChange={handleInputChange}
-                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded"
                   />
-                  <label className="ml-2 block text-sm text-gray-700">
+                  <label className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
                     Organic Certified
                   </label>
                 </div>
@@ -363,7 +363,7 @@ const EditGrain = () => {
 
             {/* Description */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Description *
               </label>
               <textarea
@@ -372,8 +372,8 @@ const EditGrain = () => {
                 onChange={handleInputChange}
                 rows={4}
                 placeholder="Provide details about your grain quality, storage conditions, etc."
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                  errors.description ? 'border-red-500' : 'border-gray-300'
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${
+                  errors.description ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                 }`}
               />
               {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description}</p>}
@@ -381,7 +381,7 @@ const EditGrain = () => {
 
             {/* Images */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Grain Images (Max 5)
               </label>
               
@@ -408,7 +408,7 @@ const EditGrain = () => {
               )}
 
               {imagePreview.length < 5 && (
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center bg-gray-50 dark:bg-gray-700">
                   <input
                     type="file"
                     accept="image/*"
@@ -421,13 +421,13 @@ const EditGrain = () => {
                     htmlFor="image-upload"
                     className="cursor-pointer inline-flex flex-col items-center"
                   >
-                    <svg className="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-12 h-12 text-gray-400 dark:text-gray-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <span className="text-sm text-gray-600">
+                    <span className="text-sm text-gray-600 dark:text-gray-300">
                       Click to upload grain images
                     </span>
-                    <span className="text-xs text-gray-400 mt-1">
+                    <span className="text-xs text-gray-400 dark:text-gray-500 mt-1">
                       PNG, JPG up to 10MB each
                     </span>
                   </label>
@@ -436,18 +436,18 @@ const EditGrain = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex space-x-4 pt-6 border-t">
+            <div className="flex space-x-4 pt-6 border-t border-gray-200 dark:border-gray-700">
               <button
                 type="button"
                 onClick={() => navigate('/farmer/my-listings')}
-                className="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg hover:bg-gray-300 transition-colors"
+                className="flex-1 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 py-3 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={submitting}
-                className="flex-1 bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors"
+                className="flex-1 bg-green-600 dark:bg-green-700 text-white py-3 rounded-lg hover:bg-green-700 dark:hover:bg-green-600 disabled:opacity-50 transition-colors"
               >
                 {submitting ? 'Updating...' : 'Update Grain'}
               </button>

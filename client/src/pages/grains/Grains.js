@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import GrainImage from '../../components/common/GrainImage';
 
 const Grains = () => {
   const [grains, setGrains] = useState([]);
@@ -187,21 +188,9 @@ const Grains = () => {
                 className="bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden"
               >
                 {/* Grain Image */}
-                <div className="h-48 bg-gradient-to-br from-green-100 to-yellow-100 dark:from-green-900 dark:to-yellow-900 flex items-center justify-center overflow-hidden">
-                  {grain.images && grain.images.length > 0 ? (
-                    <img 
-                      src={grain.images[0].url} 
-                      alt={grain.images[0].alt || grain.title}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                        e.target.nextSibling.style.display = 'flex';
-                      }}
-                    />
-                  ) : null}
-                  <div className="text-4xl flex items-center justify-center w-full h-full" style={{display: grain.images && grain.images.length > 0 ? 'none' : 'flex'}}>
-                    🌾
-                  </div>
+                                {/* Grain Image */}
+                <div className="h-48 overflow-hidden">
+                  <GrainImage grain={grain} className="h-48" />
                 </div>
 
                 {/* Grain Info */}

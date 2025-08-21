@@ -14,24 +14,55 @@ exports.createGrain = asyncHandler(async (req, res, next) => {
   // Parse JSON strings for nested objects when using multipart/form-data
   const grainData = { ...req.body };
   
-  console.log('🌾 Raw location from req.body:', req.body.location);
-  console.log('🌾 Location type:', typeof req.body.location);
-  
-  // Parse location if it's a JSON string
-  if (typeof grainData.location === 'string') {
+  // Handle location fields sent individually
+  if (req.body['location.address'] || req.body['location.city'] || req.body['location.state'] || req.body['location.pincode']) {
+    console.log('🌾 Building location from individual fields');
+    grainData.location = {
+      address: req.body['location.address'] || '',
+      city: req.body['location.city'] || '',
+      state: req.body['location.state'] || '',
+      pincode: req.body['location.pincode'] || ''
+    };
+    
+    // Remove the individual location fields from grainData
+    delete grainData['location.address'];
+    delete grainData['location.city'];
+    delete grainData['location.state'];
+    delete grainData['location.pincode'];
+    
+    console.log('🌾 Reconstructed location:', grainData.location);
+  } else if (typeof grainData.location === 'string') {
+    // Fallback: try to parse as JSON string
     try {
       console.log('🌾 Parsing location JSON string:', grainData.location);
       grainData.location = JSON.parse(grainData.location);
       console.log('🌾 Parsed location:', grainData.location);
     } catch (error) {
       console.error('🌾 Error parsing location JSON:', error);
+      grainData.location = { address: '', city: '', state: '', pincode: '' };
     }
-  } else {
-    console.log('🌾 Location is not a string, current value:', grainData.location);
+  } else if (!grainData.location || typeof grainData.location !== 'object') {
+    console.log('🌾 No location data found, creating empty location');
+    grainData.location = { address: '', city: '', state: '', pincode: '' };
   }
+
+  // Handle other JSON fields
+  if (typeof grainData.certifications === 'string') {
+    try {
+      grainData.certifications = JSON.parse(grainData.certifications);
+    } catch (error) {
+      console.error('🌾 Error parsing certifications JSON:', error);
+      grainData.certifications = [];
+    }
+  }
+
+  console.log('🌾 Final processed location:', grainData.location);
 
   // Add farmer to grain data
   grainData.farmer = req.user.id;
+
+  // Auto-approve grains for now (can be changed later for moderation)
+  grainData.status = 'approved';
 
   // Handle image uploads
   if (req.files && req.files.length > 0) {
@@ -191,12 +222,12 @@ exports.updateGrain = asyncHandler(async (req, res, next) => {
     });
   }
 
-  // Reset status to pending if significant changes are made
-  const significantFields = ['grainType', 'quantity', 'pricePerQuintal', 'description'];
-  const hasSignificantChanges = significantFields.some(field => req.body[field] !== undefined);
-  
-  if (hasSignificantChanges && grain.status === 'approved') {
-    req.body.status = 'pending';
+  // Preserve current status unless explicitly changed
+  // Only reset to pending if admin specifically sets it or if it's a new grain
+  // For normal farmer edits, keep the current status
+  if (!req.body.status) {
+    // Don't automatically change status on edit
+    delete req.body.status;
   }
 
   grain = await Grain.findByIdAndUpdate(req.params.id, req.body, {
@@ -437,6 +468,50 @@ exports.searchGrains = asyncHandler(async (req, res, next) => {
     data: {
       grains,
       searchQuery: q
+    }
+  });
+});
+
+// @desc    Update grain status
+// @route   PUT /api/grains/:id/status
+// @access  Private (Farmer who owns the grain)
+exports.updateGrainStatus = asyncHandler(async (req, res, next) => {
+  const { status } = req.body;
+
+  // Validate status
+  const validStatuses = ['pending', 'approved', 'rejected', 'sold', 'expired'];
+  if (!validStatuses.includes(status)) {
+    return res.status(400).json({
+      success: false,
+      message: 'Invalid status. Valid statuses are: pending, approved, rejected, sold, expired'
+    });
+  }
+
+  let grain = await Grain.findById(req.params.id);
+
+  if (!grain) {
+    return res.status(404).json({
+      success: false,
+      message: 'Grain not found'
+    });
+  }
+
+  // Make sure user is the owner of the grain
+  if (grain.farmer.toString() !== req.user.id && req.user.role !== 'admin') {
+    return res.status(403).json({
+      success: false,
+      message: 'Not authorized to update this grain status'
+    });
+  }
+
+  grain.status = status;
+  await grain.save();
+
+  res.status(200).json({
+    success: true,
+    message: 'Grain status updated successfully',
+    data: {
+      grain
     }
   });
 });

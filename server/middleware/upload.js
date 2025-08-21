@@ -179,6 +179,10 @@ exports.serveUploads = (req, res, next) => {
     const filePath = path.join(__dirname, '../', req.url);
     
     if (fs.existsSync(filePath)) {
+      // Add CORS headers for image requests
+      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Access-Control-Allow-Methods', 'GET');
+      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
       res.sendFile(filePath);
     } else {
       res.status(404).json({
